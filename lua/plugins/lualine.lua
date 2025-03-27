@@ -61,33 +61,41 @@ local spaces = function()
 	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 end
 
-local sections = {
-		lualine_a = { branch, diagnostics },
-		lualine_b = { mode },
-		lualine_c = { codium },
-		-- lualine_x = { "encoding", "fileformat", "filetype" },
-		lualine_x = { diff, spaces, "encoding", filetype },
-		lualine_y = { location },
-		lualine_z = { progress },
-}
-
-local inactive_sections = {
-		lualine_a = {},
-		lualine_b = {},
-		lualine_c = { "filename" },
-		lualine_x = { "location" },
-		lualine_y = {},
-		lualine_z = {},
-}
-
 return {
-    {
-        'nvim-lualine/lualine.nvim',
-	event = "VeryLazy",
-	opt = function(_, opts)
-		table.insert(opts, { ['sections'] = sections })
-		table.insert(opts, { ['inactive_sections'] = inactive_sections })	
-	end,
-	
-    }
+	{
+		"nvim-lualine/lualine.nvim",
+		event = "VeryLazy",
+
+		config = function()
+			require("lualine").setup({
+				options = {
+					icons_enabled = true,
+					theme = "auto",
+					component_separators = { left = "", right = "" },
+					section_separators = { left = "", right = "" },
+					disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },
+					always_divide_middle = true,
+				},
+				sections = {
+					lualine_a = { branch, diagnostics },
+					lualine_b = { mode },
+					lualine_c = { codium },
+					-- lualine_x = { "encoding", "fileformat", "filetype" },
+					lualine_x = { diff, spaces, "encoding", filetype },
+					lualine_y = { location },
+					lualine_z = { progress },
+				},
+				inactive_sections = {
+					lualine_a = {},
+					lualine_b = {},
+					lualine_c = { "filename" },
+					lualine_x = { "location" },
+					lualine_y = {},
+					lualine_z = {},
+				},
+				tabline = {},
+				extensions = {},
+			})
+		end,
+	},
 }

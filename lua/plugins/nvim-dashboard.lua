@@ -4,7 +4,12 @@ return {
 		event = "VimEnter",
 		config = function()
 			require("dashboard").setup({
-				-- config
+				project = {
+					enable = true,
+					label = "Recent Projects",
+					action = "Telescope find_files",
+					detection_method = "auto",
+				},
 			})
 		end,
 		dependencies = { { "nvim-tree/nvim-web-devicons" } },
