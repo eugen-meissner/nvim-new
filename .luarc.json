@@ -1,0 +1,10 @@
+{
+  "diagnostics.globals": [
+    "vim",
+        "harpoon"
+  ],
+    "diagnostics.disable": [
+        "undefined-doc-name"
+    ]
+}
+

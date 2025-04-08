@@ -7,8 +7,8 @@ local keymap = vim.api.nvim_set_keymap
 
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+-- vim.g.mapleader = " "
+-- vim.g.maplocalleader = " "
 
 -- Modes
 --   normal_mode = "n",
@@ -20,10 +20,10 @@ vim.g.maplocalleader = " "
 
 -- Normal --
 -- Better window navigation
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
+keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true, desc = "Move to left window" })
+keymap("n", "<C-j>", "<C-w>j", { noremap = true, silent = true, desc = "Move to bottom window" })
+keymap("n", "<C-k>", "<C-w>k", { noremap = true, silent = true, desc = "Move to top window" })
+keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true, desc = "Move to right window" })
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
@@ -32,42 +32,32 @@ keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
 -- Harpoon
-keymap(
-	"n",
-	"<leader>e",
-	"<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>",
-	{ noremap = true, silent = true, desc = "Harpoon: Toggle quick menu" }
-)
-keymap(
-	"n",
-	"<leader>E",
-	"<cmd>lua require('harpoon.mark').add_file()<CR>",
-	{ noremap = true, silent = true, desc = "Harpoon: Add file" }
-)
-keymap(
-	"n",
-	"<leader>1",
-	"<cmd>lua require('harpoon.ui').nav_file(1)<CR>",
-	{ noremap = true, silent = true, desc = "Harpoon: Navigate to file 1" }
-)
-keymap(
-	"n",
-	"<leader>2",
-	"<cmd>lua require('harpoon.ui').nav_file(2)<CR>",
-	{ noremap = true, silent = true, desc = "Harpoon: Navigate to file 2" }
-)
-keymap(
-	"n",
-	"<leader>3",
-	"<cmd>lua require('harpoon.ui').nav_file(3)<CR>",
-	{ noremap = true, silent = true, desc = "Harpoon: Navigate to file 3" }
-)
-keymap(
-	"n",
-	"<leader>4",
-	"<cmd>lua require('harpoon.ui').nav_file(4)<CR>",
-	{ noremap = true, silent = true, desc = "Harpoon: Navigate to file 4" }
-)
+
+local harpoon = require("harpoon")
+vim.keymap.set("n", "<leader>E", function()
+	harpoon:list():add()
+	vim.notify("File added to Harpoon", vim.log.levels.INFO, {
+		title = "Harpoon",
+		timeout = 2000,
+	})
+end, { desc = "Harpoon: Add file" })
+vim.keymap.set("n", "<leader>e", function()
+	harpoon.ui:toggle_quick_menu(harpoon:list())
+end, { desc = "Harpoon: Toggle menu" })
+
+-- Navigation keymaps
+vim.keymap.set("n", "<leader>1", function()
+	harpoon:list():select(1)
+end, { desc = "Harpoon: Go to file 1" })
+vim.keymap.set("n", "<leader>2", function()
+	harpoon:list():select(2)
+end, { desc = "Harpoon: Go to file 2" })
+vim.keymap.set("n", "<leader>3", function()
+	harpoon:list():select(3)
+end, { desc = "Harpoon: Go to file 3" })
+vim.keymap.set("n", "<leader>4", function()
+	harpoon:list():select(4)
+end, { desc = "Harpoon: Go to file 4" })
 
 -- Navigate buffers
 keymap("n", "<S-l>", ":bnext<CR>", opts)
@@ -106,9 +96,86 @@ keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
+-- LSP
+keymap(
+	"n",
+	"gD",
+	"<cmd>lua vim.lsp.buf.declaration()<CR>",
+	{ noremap = true, silent = true, desc = "LSP: Go to declaration" }
+)
+keymap(
+	"n",
+	"gd",
+	"<cmd>lua vim.lsp.buf.definition()<CR>",
+	{ noremap = true, silent = true, desc = "LSP: Go to definition" }
+)
+keymap(
+	"n",
+	"K",
+	"<cmd>Lspsaga hover_doc<CR>",
+	{ noremap = true, silent = true, desc = "LSP: Show hover documentation" }
+)
+keymap("n", "F", "<cmd>Lspsaga finder<CR>", { noremap = true, silent = true, desc = "LSP: Open symbol finder" })
+keymap(
+	"n",
+	"gI",
+	"<cmd>lua vim.lsp.buf.implementation()<CR>",
+	{ noremap = true, silent = true, desc = "LSP: Go to implementation" }
+)
+keymap("n", "gr", "<cmd>Telescope lsp_references<CR>", { noremap = true, silent = true, desc = "LSP: Find references" })
+keymap(
+	"n",
+	"gl",
+	"<cmd>lua vim.diagnostic.open_float()<CR>",
+	{ noremap = true, silent = true, desc = "LSP: Show diagnostics in float window" }
+)
+keymap(
+	"n",
+	"<leader>lf",
+	"<cmd>lua vim.lsp.buf.format{ async = true }<cr>",
+	{ noremap = true, silent = true, desc = "LSP: Format document" }
+)
+keymap("n", "<leader>li", "<cmd>LspInfo<cr>", { noremap = true, silent = true, desc = "LSP: Show LSP information" })
+keymap(
+	"n",
+	"<leader>lI",
+	"<cmd>LspInstallInfo<cr>",
+	{ noremap = true, silent = true, desc = "LSP: Show LSP installation info" }
+)
+keymap(
+	"n",
+	"<leader>lj",
+	"<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>",
+	{ noremap = true, silent = true, desc = "LSP: Go to next diagnostic" }
+)
+keymap(
+	"n",
+	"<leader>lk",
+	"<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>",
+	{ noremap = true, silent = true, desc = "LSP: Go to previous diagnostic" }
+)
+keymap(
+	"n",
+	"<leader>lr",
+	"<cmd>lua vim.lsp.buf.rename()<cr>",
+	{ noremap = true, silent = true, desc = "LSP: Rename symbol" }
+)
+keymap(
+	"n",
+	"<leader>ls",
+	"<cmd>lua vim.lsp.buf.signature_help()<CR>",
+	{ noremap = true, silent = true, desc = "LSP: Show signature help" }
+)
+keymap(
+	"n",
+	"<leader>lq",
+	"<cmd>lua vim.diagnostic.setloclist()<CR>",
+	{ noremap = true, silent = true, desc = "LSP: Add diagnostics to location list" }
+)
+
 -- Debugging --
-keymap("n", "<F9>", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts)
-keymap("n", "<F8>", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>", opts)
+keymap("n", "<F8>", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts)
+keymap("n", "<F7>", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>", opts)
 keymap("n", "<F5>", "", {
 	callback = function()
 		if vim.fn.filereadable(".vscode/launch.json") then
@@ -122,12 +189,27 @@ keymap("n", "<F5>", "", {
 	noremap = true,
 	silent = true,
 })
-keymap("n", "<F11>", "<cmd>lua require'dap'.step_into()<cr>", opts)
-keymap("n", "<F10>", "<cmd>lua require'dap'.step_over()<cr>", opts)
-keymap("n", "<S-F10>", "<cmd>lua require'dap'.step_out()<cr>", opts)
-keymap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts)
-keymap("n", "<leader>q", "<cmd>lua require'dap'.terminate()<cr>", opts)
-keymap("n", "<space>?", "<cmd>lua require'dapui'.eval(nil, { enter=true })<cr>", opts)
+keymap("n", "<F10>", "<cmd>lua require'dap'.step_into()<cr>", opts)
+keymap("n", "<F9>", "<cmd>lua require'dap'.step_over()<cr>", opts)
+keymap("n", "<S-F9>", "<cmd>lua require'dap'.step_out()<cr>", opts)
+keymap(
+	"n",
+	"<leader>du",
+	"<cmd>lua require'dapui'.toggle()<cr>",
+	{ noremap = true, silent = true, desc = "Debug: Toggle UI" }
+)
+keymap(
+	"n",
+	"<leader>q",
+	"<cmd>lua require'dap'.terminate()<cr>",
+	{ noremap = true, silent = true, desc = "Debug: Terminate session" }
+)
+keymap(
+	"n",
+	"<space>?",
+	"<cmd>lua require'dapui'.eval(nil, { enter=true })<cr>",
+	{ noremap = true, silent = true, desc = "Debug: Evaluate expression" }
+)
 
 -- NvimTree
 keymap("n", "<C-n>", "<cmd> NvimTreeToggle <CR>", opts)

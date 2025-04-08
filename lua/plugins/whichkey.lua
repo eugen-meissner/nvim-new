@@ -18,12 +18,12 @@ return {
 					},
 					presets = {
 						operators = false,
-						motions = true,
-						text_objects = true,
-						windows = true,
-						nav = true,
-						z = true,
-						g = true,
+						--motions = true,
+						--text_objects = true,
+						--windows = true,
+						--nav = true,
+						--z = true,
+						--g = true,
 					},
 				},
 				layout = {
@@ -59,9 +59,6 @@ return {
 				{ "<leader>l", '<cmd>exec &bg=="light"? "set bg=dark" : "set bg=light"<CR>', desc = "Toggle Theme" },
 
 				{ "<leader>p", "<cmd>lua require('telescope').extensions.projects.projects()<cr>", desc = "Projects" },
-
-				{ "<leader>t", "<cmd>ToggleTerm direction=tab<cr>", desc = "Terminal (Root)" },
-				{ "<leader>T", "<cmd>ToggleTerm direction=tab<cr>", desc = "Terminal (cwd)" },
 
 				{ "<leader>g", "<cmd>Neogit<cr>", desc = "Status" },
 

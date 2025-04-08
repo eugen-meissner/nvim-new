@@ -17,11 +17,19 @@ return {
 			shell = vim.o.shell,
 			float_opts = {
 				border = "curved",
-				winblend = 0,
+				winblend = 3,
+				width = function()
+					return math.floor(vim.o.columns * 0.85)
+				end,
+				height = function()
+					return math.floor(vim.o.lines * 0.8)
+				end,
 				highlights = {
-					border = "Normal",
+					border = "FloatBorder",
 					background = "Normal",
 				},
+				title = " Terminal ",
+				title_pos = "center",
 			},
 		})
 
@@ -69,12 +77,6 @@ return {
 		end
 
 		-- Key mappings for custom terminals
-		vim.api.nvim_set_keymap(
-			"n",
-			"<leader>tg",
-			"<cmd>lua toggle_lazygit()<CR>",
-			{ noremap = true, silent = true, desc = "Lazygit" }
-		)
 		vim.api.nvim_set_keymap(
 			"n",
 			"<leader>tn",

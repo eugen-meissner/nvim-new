@@ -1,10 +1,13 @@
 return {
 	{ "ellisonleao/gruvbox.nvim" },
-	{ "rose-pine/neovim", name = "rose-pine" },
 	{
-		"LazyVim/LazyVim",
-		opts = {
-			colorscheme = "rose-pine",
-		},
+		"craftzdog/solarized-osaka.nvim",
+		config = function()
+			require("solarized-osaka").setup({
+				transparent = false,
+			})
+			vim.cmd.colorscheme("solarized-osaka")
+		end,
 	},
+	{ "rose-pine/neovim", name = "rose-pine" },
 }
