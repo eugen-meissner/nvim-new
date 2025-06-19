@@ -6,7 +6,7 @@ return {
 		provider = "claude",
 		anthropic = {
 			endpoint = "https://api.anthropic.com/v1",
-			model = "claude-3-7-sonnet-latest", -- Other options: "claude-3-sonnet-20240229", "claude-3-haiku-20240307"
+			model = "claude-opus-4-20250514", -- Other options: "claude-3-sonnet-20240229", "claude-3-haiku-20240307"
 			timeout = 30000, -- Timeout in milliseconds (30 seconds)
 			temperature = 0, -- Deterministic output
 			max_completion_tokens = 8192, -- Max tokens to generate (adjust if needed, Anthropic caps at 4096 for some models)

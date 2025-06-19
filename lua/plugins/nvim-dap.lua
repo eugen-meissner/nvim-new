@@ -88,6 +88,40 @@ return {
 						disconnect = "⏏",
 					},
 				},
+				layouts = {
+					{
+						elements = {
+							-- Elements can be strings or table with id and size keys.
+							{ id = "scopes", size = 0.25 },
+							"breakpoints",
+							"stacks",
+							"watches",
+						},
+						size = 60, -- 60 columns
+						position = "left",
+					},
+					{
+						elements = {
+							"repl",
+							"console",
+						},
+						size = 0.25, -- 25% of total lines
+						position = "bottom",
+					},
+				},
+				floating = {
+					max_height = nil, -- These can be integers or nil.
+					max_width = nil, -- Integers if greater than 1, float if less than 1
+					border = "single", -- Border style. Can be "single", "double" or "rounded"
+					mappings = {
+						close = { "q", "<Esc>" },
+					},
+				},
+				windows = { indent = 1 },
+				render = {
+					max_type_length = nil, -- Can be integer or nil.
+					max_value_lines = 100, -- Can be integer or nil.
+				},
 			})
 			-- Register listeners
 			dap.listeners.after.event_initialized["dapui_config"] = dapui.open

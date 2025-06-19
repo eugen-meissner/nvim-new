@@ -213,3 +213,17 @@ keymap(
 
 -- NvimTree
 keymap("n", "<C-n>", "<cmd> NvimTreeToggle <CR>", opts)
+
+-- Trouble diagnostics
+keymap(
+	"n",
+	"<leader>cw",
+	"<cmd>Trouble diagnostics<cr>",
+	{ noremap = true, silent = true, desc = "Trouble: Workspace Diagnostics" }
+)
+keymap(
+	"n",
+	"<leader>cl",
+	"<cmd>Trouble loclist<cr>",
+	{ noremap = true, silent = true, desc = "Trouble: Location List" }
+)
