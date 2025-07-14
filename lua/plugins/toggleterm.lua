@@ -76,18 +76,18 @@ return {
 			python:toggle()
 		end
 
-		-- Custom build terminal
-		local build = Terminal:new({ cmd = "dotnet build", hidden = true, direction = "float", close_on_exit = false })
-		function _G.toggle_build()
-			build:toggle()
-		end
-
-		-- Custom test terminal
-		local test =
-			Terminal:new({ cmd = "dotnet test", hidden = true, direction = "horizontal", close_on_exit = false })
-		function _G.toggle_test()
-			test:toggle()
-		end
+		-- -- Custom build terminal
+		-- local build = Terminal:new({ cmd = "dotnet build", hidden = true, direction = "float", close_on_exit = false })
+		-- function _G.toggle_build()
+		-- 	build:toggle()
+		-- end
+		--
+		-- -- Custom test terminal
+		-- local test =
+		-- 	Terminal:new({ cmd = "dotnet test", hidden = true, direction = "horizontal", close_on_exit = false })
+		-- function _G.toggle_test()
+		-- 	test:toggle()
+		-- end
 
 		-- Key mappings for custom terminals
 		vim.api.nvim_set_keymap(

@@ -189,6 +189,8 @@ keymap("n", "<F5>", "", {
 	noremap = true,
 	silent = true,
 })
+keymap("n", "<F3>", "<cmd>lua require'dapui'.toggle()<cr>", opts)
+keymap("n", "<F4>", "<cmd>lua require'dapui'.eval(nil, { enter=true })<cr>", opts)
 keymap("n", "<F10>", "<cmd>lua require'dap'.step_into()<cr>", opts)
 keymap("n", "<F9>", "<cmd>lua require'dap'.step_over()<cr>", opts)
 keymap("n", "<S-F9>", "<cmd>lua require'dap'.step_out()<cr>", opts)

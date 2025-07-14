@@ -69,7 +69,23 @@ return {
 				{ "<leader>c", group = "code" },
 				{ "<leader>ca", "<cmd>Lspsaga code_action<cr>", desc = "Code Action" },
 
+				{ "<leader>s", group = "settings" },
+				{ "<leader>sc", "<cmd>Telescope colorscheme enable_preview=true<cr>", desc = "Select Colorscheme" },
+
 				{ "<leader>r", group = "test" },
+				{ "<leader>rr", "<cmd>lua require('neotest').run.run()<CR>", desc = "Run nearest test" },
+				{
+					"<leader>rd",
+					"<cmd>lua require('neotest').run.run({strategy = 'dap'})<CR>",
+					desc = "Debug nearest test",
+				},
+				{
+					"<leader>ra",
+					"<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>",
+					desc = "Run tests in file",
+				},
+				{ "<leader>rs", "<cmd>lua require('neotest').summary.toggle()<CR>", desc = "Test Summary" },
+				{ "<leader>ro", "<cmd>lua require('neotest').output_panel.toggle()<CR>", desc = "Test Output" },
 
 				{ "<leader>w", group = "window" },
 				{ "<leader>wD", "<C-w>o", desc = "Close Others" },

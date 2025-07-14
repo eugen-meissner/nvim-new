@@ -2,10 +2,13 @@ return {
 	{ "ellisonleao/gruvbox.nvim" },
 	{
 		"craftzdog/solarized-osaka.nvim",
+		lazy = false,
+		priority = 1000,
 		config = function()
 			require("solarized-osaka").setup({
 				transparent = false,
 			})
+			vim.cmd.colorscheme("solarized-osaka")
 		end,
 	},
 	{
@@ -16,8 +19,19 @@ return {
 				-- contrast = "hard",
 				transparent_mode = false,
 			})
-			vim.cmd.colorscheme("gruvbox")
 		end,
 	},
 	{ "rose-pine/neovim", name = "rose-pine" },
+	{
+		"scottmckendry/cyberdream.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function() end,
+	},
+	{
+		"xero/miasma.nvim",
+		lazy = false,
+		priority = 1000,
+		config = function() end,
+	},
 }
