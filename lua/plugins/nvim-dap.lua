@@ -127,7 +127,6 @@ return {
 			dap.listeners.after.event_initialized["dapui_config"] = dapui.open
 			dap.listeners.before.event_terminated["dapui_config"] = dapui.close
 			dap.listeners.before.event_exited["dapui_config"] = dapui.close
-			-- Process launch.json and tasks.json files
 			require("overseer").setup({
 				task_list = {
 					direction = "bottom",
@@ -170,6 +169,7 @@ return {
 				},
 			})
 
+			-- Process launch.json and tasks.json files
 			require("dap.ext.vscode").json_decode = require("overseer.json").decode
 			require("dap.ext.vscode").load_launchjs(
 				nil,
