@@ -1,5 +1,4 @@
 return {
-	{ "ellisonleao/gruvbox.nvim" },
 	{
 		"craftzdog/solarized-osaka.nvim",
 		lazy = false,
@@ -8,7 +7,7 @@ return {
 			require("solarized-osaka").setup({
 				transparent = false,
 			})
-			vim.cmd.colorscheme("solarized-osaka")
+			-- vim.cmd.colorscheme("solarized-osaka")
 		end,
 	},
 	{
@@ -19,6 +18,7 @@ return {
 				-- contrast = "hard",
 				transparent_mode = false,
 			})
+			vim.cmd.colorscheme("gruvbox")
 		end,
 	},
 	{ "rose-pine/neovim", name = "rose-pine" },

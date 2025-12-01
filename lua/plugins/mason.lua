@@ -19,7 +19,6 @@ local lsps = {
 }
 local debuggers = {
 	"codelldb",
-	"netcoredbg",
 }
 vim.list_extend(ensure_installed, formatters)
 vim.list_extend(ensure_installed, lsps)
