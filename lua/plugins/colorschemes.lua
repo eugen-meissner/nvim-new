@@ -5,7 +5,7 @@ return {
 		priority = 1000,
 		config = function()
 			require("solarized-osaka").setup({
-				transparent = false,
+				transparent = true,
 			})
 			-- vim.cmd.colorscheme("solarized-osaka")
 		end,
@@ -16,7 +16,7 @@ return {
 		config = function()
 			require("gruvbox").setup({
 				-- contrast = "hard",
-				transparent_mode = false,
+				transparent_mode = true,
 			})
 			vim.cmd.colorscheme("gruvbox")
 		end,
