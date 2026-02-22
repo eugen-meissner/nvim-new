@@ -168,56 +168,40 @@ return {
 					},
 				},
 			})
+			local dap_vscode = require("dap.ext.vscode")
+			dap_vscode.json_decode = require("overseer.json").decode
+			dap_vscode.type_to_filetypes = vim.tbl_extend("force", dap_vscode.type_to_filetypes or {}, {
+				codelldb = { "rust" },
+				lldb = { "rust" },
+				coreclr = { "cs" },
+				dotnet = { "cs" },
+				netcoredbg = { "cs" },
+			})
 
-			-- Process launch.json and tasks.json files
-			require("dap.ext.vscode").json_decode = require("overseer.json").decode
-			require("dap.ext.vscode").load_launchjs(
-				nil,
-				{ codelldb = { "rust" }, lldb = { "rust" }, coreclr = { "cs" } }
-			)
-
-			-- Add build feedback for debugging
 			local function show_build_progress()
-				vim.notify("🔨 Building application...", vim.log.levels.INFO, { title = "Debug Build" })
-				-- Open overseer task list in floating window
+				vim.notify("🔨 Starting debug build...", vim.log.levels.INFO, { title = "Debug Build" })
 				vim.cmd("OverseerOpen!")
 			end
 
 			local function hide_build_progress()
-				vim.notify("✅ Build completed successfully!", vim.log.levels.INFO, { title = "Debug Build" })
-				-- Close overseer immediately when build is done
 				vim.cmd("OverseerClose")
 			end
 
-			-- Hook into DAP events to show build progress
 			dap.listeners.before.event_initialized["build_feedback"] = function()
-				-- This runs when debugging starts (after build)
 				hide_build_progress()
 			end
+			dap.listeners.before.event_terminated["build_feedback"] = hide_build_progress
+			dap.listeners.before.event_exited["build_feedback"] = hide_build_progress
+			dap.listeners.before.disconnect["build_feedback"] = hide_build_progress
 
-			-- Override the run function to show build feedback only after profile selection
 			local original_run = dap.run
 			dap.run = function(config, opts)
-				-- Show build progress only when a config is actually selected and run
 				if config and config.preLaunchTask then
 					show_build_progress()
 				end
 				original_run(config, opts)
 			end
-
-			-- Override continue to handle first-time runs differently
-			local original_continue = dap.continue
-			dap.continue = function()
-				local session = dap.session()
-				if not session then
-					-- This is a new debug session, let the user select a profile first
-					-- The build feedback will be shown in dap.run when a profile is selected
-					original_continue()
-				else
-					-- This is continuing an existing session
-					original_continue()
-				end
-			end
+			dap.listeners.before.disconnect["dapui_config"] = dapui.close
 		end,
 	},
 }
