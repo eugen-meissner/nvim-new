@@ -10,7 +10,6 @@ return {
 			"Hoffs/omnisharp-extended-lsp.nvim",
 		},
 		config = function()
-			local lspconfig = require("lspconfig")
 			local mason_lspconf = require("mason-lspconfig")
 			mason_lspconf.setup({
 				ensure_installed = {},
@@ -24,6 +23,21 @@ return {
 			vim.lsp.config("*", {
 				capabilities = capabilities,
 			})
+			vim.lsp.config("gopls", {
+				capabilities = capabilities,
+				settings = {
+					gopls = {
+						analyses = {
+							unusedparams = true,
+						},
+						completeUnimported = true,
+						gofumpt = true,
+						staticcheck = true,
+						usePlaceholders = true,
+					},
+				},
+			})
+			vim.lsp.enable("gopls")
 		end,
 	},
 }

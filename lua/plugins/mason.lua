@@ -2,6 +2,8 @@
 local ensure_installed = {}
 local formatters = {
 	"djlint",
+	"gofumpt",
+	"goimports",
 	"jq",
 	"latexindent",
 	"prettier",

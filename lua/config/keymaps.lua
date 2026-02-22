@@ -176,19 +176,7 @@ keymap(
 -- Debugging --
 keymap("n", "<F8>", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts)
 keymap("n", "<F7>", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>", opts)
-keymap("n", "<F5>", "", {
-	callback = function()
-		if vim.fn.filereadable(".vscode/launch.json") then
-			require("dap.ext.vscode").load_launchjs(
-				nil,
-				{ codelldb = { "rust" }, lldb = { "rust" }, coreclr = { "cs" } }
-			)
-		end
-		require("dap").continue()
-	end,
-	noremap = true,
-	silent = true,
-})
+keymap("n", "<F5>", "<cmd>lua require'dap'.continue()<cr>", opts)
 keymap("n", "<F3>", "<cmd>lua require'dapui'.toggle()<cr>", opts)
 keymap("n", "<F4>", "<cmd>lua require'dapui'.eval(nil, { enter=true })<cr>", opts)
 keymap("n", "<F10>", "<cmd>lua require'dap'.step_into()<cr>", opts)

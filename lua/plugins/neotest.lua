@@ -7,10 +7,12 @@ return {
 			"antoinemadec/FixCursorHold.nvim",
 			"nvim-treesitter/nvim-treesitter",
 			"Issafalcon/neotest-dotnet",
+			"nvim-neotest/neotest-go",
 		},
 		config = function()
 			require("neotest").setup({
 				adapters = {
+					require("neotest-go")({}),
 					require("neotest-dotnet")({
 						dap = {
 							adapter_name = "coreclr",
